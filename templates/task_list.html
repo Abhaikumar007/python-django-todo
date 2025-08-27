@@ -1,0 +1,28 @@
+<h1>Todo List</h1>
+
+<!-- first check if there is something to add -->
+ <form method='POST' action="{% url 'create' %}">
+    {% csrf_token %}
+    <input type="text" name="text" placeholder="Enter a new task"></input>
+    <button type="submit">Add</button>
+ </form>
+ <div>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            {% if task.completed %}
+                <s>{{task.text}}</s>
+            {% else %}
+                <div>
+                <p>{{task.text}}</p>
+                    <a href="{% url 'complete' task.id %}">complete</a>
+                    <a href="{% url 'delete' task.id %}">Delete</a>
+                </div>
+            {% endif %}
+
+        </li>
+        {% empty %}
+          <p>There is nothing</p>
+        {% endfor %}
+    </ul>
+ </div>
